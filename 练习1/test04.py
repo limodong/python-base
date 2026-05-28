@@ -10,11 +10,15 @@
 4. 输出结果：打印该范围内的所有素数，并统计素数的个数。
 """
 
-num_start = int(input("请输入起始数字："))
-num_end = int(input("请输入结束数字："))
-while num_start < num_end:
+num_start = 0
+num_end = 0
+while num_start < 0 or num_end < 0 or num_start >= num_end:
     num_start = int(input("请输入起始数字："))
     num_end = int(input("请输入结束数字："))
+    if num_start > 0 and num_end > 0 and num_start < num_end:
+        break
+    else:
+        print("输入不合法！起始数字和结束数字不能为负整数，结束数字必须大于起始数字")
 print(f"{num_start} 到 {num_end} 之间的素数有：")
 while num_start <= num_end:
     if num_start == 2:
