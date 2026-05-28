@@ -33,4 +33,18 @@ def to_linked_list(arr, node={"value": "", "next": None}, i=0):
 
 print(to_linked_list((1, 2, 3)))
 
-# def merge_dicts(*arr)
+
+def merge_dicts(*dicts):
+    result = {}
+    for item in dicts:
+        for key, value in item.items():
+            result[key] = value
+    return result
+
+
+d1 = {"a": 1, "b": [1, 2]}
+d2 = {"b": [3], "c": "hello"}
+d3 = {"a": 10, "d": True}
+print(merge_dicts(d1, d2, d3))
+print(merge_dicts(d1))
+print(merge_dicts())
