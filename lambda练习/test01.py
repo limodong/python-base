@@ -5,7 +5,7 @@ products = [
     {"name": "iPad Air", "inc": "APPLE", "price": 4799, "stock": 1200},
     {"name": "Apple Watch", "inc": "APPLE", "price": 2999, "stock": 2100},
     {"name": "Galaxy S24", "inc": "SAMSUNG", "price": 5499, "stock": 2800},
-    {"name": "Galaxy Tab", "inc": "SAMSUNG", "price": 3999, "stock": 950},
+    {"name": "Galaxy Tab", "inc": "SAMSUNG", "price": 14999, "stock": 950},
     {"name": "Galaxy Buds", "inc": "SAMSUNG", "price": 899, "stock": 3200},
     {"name": "Galaxy Watch", "inc": "SAMSUNG", "price": 2199, "stock": 1500},
     {"name": "Mate 60 Pro", "inc": "HUAWEI", "price": 6999, "stock": 800},
@@ -23,7 +23,7 @@ products = [
     {"name": "Pixel Buds", "inc": "GOOGLE", "price": 1299, "stock": 1500},
     {"name": "Pixel Watch", "inc": "GOOGLE", "price": 2599, "stock": 900},
     {"name": "Pixel Tablet", "inc": "GOOGLE", "price": 3499, "stock": 400},
-    {"name": "ThinkPad X1", "inc": "LENOVO", "price": 9999, "stock": 720},
+    {"name": "ThinkPad X1", "inc": "LENOVO", "price": 14999, "stock": 720},
     {"name": "Legion Y9000", "inc": "LENOVO", "price": 8999, "stock": 1100},
     {"name": "Tab P12", "inc": "LENOVO", "price": 2499, "stock": 1300},
     {"name": "Dell XPS 13", "inc": "DELL", "price": 10999, "stock": 650},
@@ -37,7 +37,7 @@ products = [
     {"name": "OPPO Find X7", "inc": "OPPO", "price": 3999, "stock": 2200},
     {"name": "OPPO Pad 2", "inc": "OPPO", "price": 2999, "stock": 1000},
     {"name": "OPPO Enco", "inc": "OPPO", "price": 499, "stock": 3500},
-    {"name": "Vivo X100", "inc": "VIVO", "price": 3999, "stock": 2500},
+    {"name": "Vivo X100", "inc": "VIVO", "price": 14999, "stock": 2500},
     {"name": "Vivo Pad 2", "inc": "VIVO", "price": 2499, "stock": 900},
     {"name": "Vivo TWS", "inc": "VIVO", "price": 399, "stock": 4000},
 ]
@@ -55,9 +55,62 @@ from functools import reduce
 # sorted(products, key=lambda item: item.get("price"))
 # sorted(products, key=lambda item: item.get("price"),reverse=True)
 # sorted(products, key=lambda item: item.get("price") * item.get("stock"))
-# result = list(filter(lambda item: item.get("inc") == "XIAOMI", products))
-# max(products, key=lambda item: item.get("price")).get("inc")
 
-# APPLE SAMSUNG HUAWEI XIAOMI GOOGLE LENOVO DELL MICROSOFT ONEPLUS OPPO VIVO
-incs = set(map(lambda item: item.get("inc"), products))
-print(set(map(lambda item: item.get("inc"), products)))
+# 找出XIAOMI的所有产品，得到一个字符串列表
+"""
+print(
+    list(
+        map(
+            lambda item: item["name"],
+            filter(lambda item: item.get("inc") == "XIAOMI", products),
+        )
+    )
+)
+
+"""
+
+# 找出价格最高的产品所属的公司列表（字符串列表）
+"""
+max_price = max(products, key=lambda item: item.get("price"))["price"]
+print(
+    list(
+        map(
+            lambda item: item["name"],
+            filter(lambda item: item.get("price") == max_price, products),
+        )
+    )
+)
+"""
+
+
+# 得到每家公司产品的平均价格
+def avg(inc):
+    inc_prices = list(
+        map(
+            lambda item: item["price"],
+            filter(lambda item: item["inc"] == inc, products),
+        )
+    )
+    return reduce(lambda x, y: x + y, inc_prices) / len(inc_prices)
+
+
+incs = list(set(map(lambda item: item["inc"], products)))
+result = list(
+    map(lambda item: {"inc": item["inc"], "avg_price": avg(item["inc"])}, products)
+)
+print(result)
+"""
+[
+    {"inc": "HUAWEI", "avg_price": 4156.8},
+    {"inc": "GOOGLE", "avg_price": 3099.0},
+    {"inc": "MICROSOFT", "avg_price": 6999.0},
+    {"inc": "ONEPLUS", "avg_price": 2132.3333333333335},
+    {"inc": "VIVO", "avg_price": 2299.0},
+    {"inc": "XIAOMI", "avg_price": 2372.3333333333335},
+    {"inc": "SAMSUNG", "avg_price": 3149.0},
+    {"inc": "OPPO", "avg_price": 2499.0},
+    {"inc": "DELL", "avg_price": 8999.0},
+    {"inc": "APPLE", "avg_price": 6139.0},
+    {"inc": "LENOVO", "avg_price": 7165.666666666667},
+]
+"""
