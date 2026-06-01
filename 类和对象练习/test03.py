@@ -42,3 +42,13 @@ dog.speak()
 print(isinstance(dog, object))
 print(Dog.__base__, dog.__class__)
 print(vars(dog.__class__))
+
+arr1 = [1, 2, 3]
+arr2 = (1, 2, 3)
+arr3 = {1, 2, 3}
+print(0 == None)
+
+nums = [1, 2, 3]
+n = nums[0]
+del nums[0]
+print(n)
